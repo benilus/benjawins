@@ -3,254 +3,330 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BENJA WINS / HIGH SCORES</title>
-<meta name="description" content="Ben. Builder in Norway. The high-score table: every app shipped, every game over.">
-<meta property="og:title" content="BENJA WINS / HIGH SCORES">
-<meta property="og:description" content="The high-score table. Apps alive, apps game over. Insert coin to support.">
+<title>Benja wins.</title>
+<meta name="description" content="Ben. Builder in Norway. Every app on the board: wins, losses, and the score.">
+<meta property="og:title" content="Benja wins.">
+<meta property="og:description" content="Every app I ship goes on the board. Wins, losses, and the score.">
 <meta property="og:image" content="https://benjawins.com/og.png">
 <meta property="og:url" content="https://benjawins.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://benjawins.com/og.png">
-<meta name="theme-color" content="#050807">
+<meta name="theme-color" content="#2b3ed1">
 <style>
   :root {
-    --bg: #050807;
-    --green: #5dff9b;
-    --green-dim: rgb(93 255 155 / 0.55);
-    --white: #e8f5ec;
-    --gold: #ffd45e;
-    --red: #ff6b6b;
-    --line: rgb(93 255 155 / 0.16);
+    --cobalt: #2b3ed1;
+    --cobalt-deep: #1f2fae;
+    --red: #e8362c;
+    --cream: #f6eedd;
+    --ink: #14141c;
+    --paper-ink: #1b1a24;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  ::selection { background: var(--green); color: #041007; }
-  html { background: var(--bg); }
+  ::selection { background: var(--red); color: #fff; }
+  html { background: var(--ink); }
   body {
-    background: var(--bg);
-    color: var(--white);
-    font-family: ui-monospace, "SF Mono", Menlo, "Cascadia Mono", monospace;
-    line-height: 1.6;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: "Iowan Old Style", "Palatino", "Times New Roman", Georgia, serif;
+    line-height: 1.55;
+    padding: 14px; /* the poster frame */
   }
-  /* CRT scanlines: fixed, cheap, non-interactive */
-  body::after {
+  .sheet { position: relative; overflow: hidden; }
+
+  /* print grain over everything inside the frame */
+  .sheet::after {
     content: "";
-    position: fixed;
+    position: absolute;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px, transparent 2px,
-      rgb(0 0 0 / 0.18) 3px, rgb(0 0 0 / 0.18) 4px
-    );
-    z-index: 60;
+    z-index: 50;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   }
+
   a { color: inherit; text-decoration: none; }
+  .sans { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
 
-  main { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
-  header { text-align: center; padding: 84px 0 44px; }
-  .stars { color: var(--gold); font-size: 14px; letter-spacing: 0.5em; }
-  h1 {
-    font-size: clamp(2rem, 8vw, 4.2rem);
-    font-weight: 700;
-    color: var(--green);
-    letter-spacing: 0.06em;
-    line-height: 1.05;
-    margin: 14px 0 6px;
-    text-shadow: 0 0 18px rgb(93 255 155 / 0.35);
+  /* Hero */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(120% 90% at 50% 110%, rgb(0 0 0 / 0.35), transparent 55%),
+      linear-gradient(180deg, var(--cobalt) 0%, var(--cobalt-deep) 100%);
+    min-height: 92dvh;
+    display: flex;
+    flex-direction: column;
   }
-  .subtitle { color: var(--green-dim); font-size: 13px; }
-  .player { margin-top: 26px; font-size: 12px; color: var(--white); }
-  .player a { color: var(--gold); }
-  .player a:hover { text-decoration: underline; }
-
-  .featured {
-    display: block;
-    margin-top: 46px;
-    border: 2px solid var(--green);
-    box-shadow: 0 0 26px rgb(93 255 155 / 0.14), inset 0 0 18px rgb(93 255 155 / 0.05);
-    padding: 22px 24px 24px;
-    text-align: center;
-  }
-  .featured:hover { background: rgb(93 255 155 / 0.05); }
-  .featured .tag {
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.3em;
-  }
-  .featured .big {
-    display: block;
-    font-size: clamp(1.6rem, 5vw, 2.4rem);
-    font-weight: 700;
-    color: var(--green);
-    text-shadow: 0 0 16px rgb(93 255 155 / 0.4);
-    margin: 8px 0 6px;
-  }
-  .featured .pitch {
-    color: rgb(232 245 236 / 0.55);
-    font-size: 12px;
-    text-transform: none;
-    letter-spacing: 0.03em;
-    max-width: 48ch;
-    margin: 0 auto 14px;
-  }
-  .featured .play { color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: 0.2em; }
-  .featured:hover .play { text-decoration: underline; }
-
-  h2 {
-    font-size: 13px;
-    color: var(--green-dim);
-    letter-spacing: 0.3em;
-    text-align: center;
-    padding: 40px 0 18px;
-  }
-
-  .board { border-top: 1px solid var(--line); }
-  .game { display: block; padding: 16px 4px; border-bottom: 1px solid var(--line); }
-  a.game:hover { background: rgb(93 255 155 / 0.05); }
-  a.game:hover .name { text-shadow: 0 0 12px rgb(93 255 155 / 0.6); }
-  .line { display: flex; align-items: baseline; gap: 12px; font-size: 14px; }
-  .rank { color: var(--gold); width: 40px; flex: none; }
-  .name { color: var(--green); font-weight: 700; }
-  .leader { flex: 1; border-bottom: 2px dotted rgb(93 255 155 / 0.22); transform: translateY(-4px); min-width: 24px; }
-  .score { color: var(--white); white-space: nowrap; }
-  .status { white-space: nowrap; width: 96px; text-align: right; flex: none; }
-  .alive { color: var(--green); }
-  .wip { color: var(--gold); }
-  .over { color: var(--red); }
-  .desc {
-    margin: 5px 0 0 52px;
-    color: rgb(232 245 236 / 0.45);
-    font-size: 11.5px;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    max-width: 56ch;
-  }
-  .dead .name { color: rgb(232 245 236 / 0.45); text-decoration: line-through; text-decoration-color: rgb(255 107 107 / 0.6); }
-  .dead .rank { color: rgb(232 245 236 / 0.3); }
-
-  .coin { text-align: center; padding: 64px 0 30px; }
-  .coin p {
-    color: rgb(232 245 236 / 0.55);
-    font-size: 12px;
-    text-transform: none;
-    letter-spacing: 0.03em;
-    max-width: 44ch;
-    margin: 0 auto 26px;
-  }
-  .btn {
-    display: inline-block;
-    border: 2px solid var(--green);
-    color: var(--green);
-    font-family: inherit;
+  nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 26px 34px;
     font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    padding: 14px 30px;
-    text-shadow: 0 0 12px rgb(93 255 155 / 0.4);
-    box-shadow: 0 0 22px rgb(93 255 155 / 0.12), inset 0 0 14px rgb(93 255 155 / 0.06);
   }
-  .btn:hover { background: var(--green); color: #041007; text-shadow: none; }
-  .cursor { animation: blink 1.05s steps(1) infinite; }
+  nav .wordmark {
+    grid-column: 2;
+    font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+    font-size: 19px;
+  }
+  nav .follow {
+    grid-column: 3;
+    justify-self: end;
+    background: var(--red);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 999px;
+  }
+  nav .follow:hover { filter: brightness(1.08); }
+
+  .hero-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 46px 24px 40px;
+    position: relative;
+    z-index: 2;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1.16;
+    max-width: 21ch;
+    text-wrap: balance;
+    padding-bottom: 0.2em;
+  }
+  .hero .cta {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 999px;
+    margin-top: 30px;
+    box-shadow: 0 8px 26px rgb(0 0 0 / 0.25);
+    transition: transform 0.15s ease;
+  }
+  .hero .cta:hover { transform: translateY(-1px); }
+
+  /* Poster illustration slot: bottom-anchored subject.
+     Hidden automatically until hero.png exists in the repo. */
+  .hero-art {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    width: 100%;
+    max-height: 50dvh;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* Scoreboard: the paper side of the poster */
+  .board { background: var(--cream); color: var(--paper-ink); padding: 90px 30px 70px; }
+  .board .wrap { max-width: 860px; margin: 0 auto; }
+  .board h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .board .rules {
+    text-align: center;
+    color: rgb(27 26 36 / 0.6);
+    max-width: 52ch;
+    margin: 14px auto 54px;
+    font-size: 1.02rem;
+  }
+
+  .entry {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 22px 2px 6px;
+  }
+  .entry .name { font-size: 1.45rem; font-weight: 600; }
+  a:hover .name { color: var(--red); }
+  .entry .dots { flex: 1; border-bottom: 2px dotted rgb(27 26 36 / 0.3); transform: translateY(-5px); min-width: 30px; }
+  .entry .score {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .tag {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+    transform: rotate(-1.2deg);
+    display: inline-block;
+  }
+  .tag.alive { background: var(--cobalt); color: #fff; }
+  .tag.beta { background: #e89a1f; color: #fff; }
+  .tag.dead { background: var(--red); color: #fff; }
+  .desc {
+    color: rgb(27 26 36 / 0.62);
+    font-size: 1rem;
+    max-width: 58ch;
+    padding: 0 2px 16px;
+    border-bottom: 1px solid rgb(27 26 36 / 0.12);
+  }
+  .dead-name { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+
+  /* Coin */
+  .coin {
+    background: var(--cobalt);
+    text-align: center;
+    padding: 86px 30px 92px;
+  }
+  .coin h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight: 600; max-width: 24ch; margin: 0 auto; }
+  .coin p { color: rgb(246 238 221 / 0.75); max-width: 44ch; margin: 16px auto 30px; }
+  .coin .cta {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 999px;
+  }
+  .coin .cta:hover { filter: brightness(1.08); }
 
   footer {
+    background: var(--ink);
+    color: rgb(246 238 221 / 0.55);
     text-align: center;
-    padding: 40px 0 60px;
-    font-size: 12px;
-    color: var(--green-dim);
+    font-size: 0.85rem;
+    padding: 30px 20px 18px;
   }
-  footer a { color: var(--gold); }
-  footer a:hover { text-decoration: underline; }
+  footer a { color: var(--cream); }
+  footer a:hover { color: var(--red); }
 
-  @keyframes blink { 50% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) {
-    .cursor { animation: none; }
-  }
-  @media (max-width: 560px) {
-    th.hide, td.hide { display: none; }
-    td { padding: 13px 6px; }
+  @media (max-width: 600px) {
+    body { padding: 8px; }
+    nav { padding: 20px; }
+    .entry { flex-wrap: wrap; }
+    .entry .name { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <div class="stars">★ ★ ★</div>
-    <h1>Benja wins</h1>
-    <p class="subtitle">High scores / est. Norway / career earnings: $43 / players reached: 1,000+</p>
-    <p class="player">Player: BENJA · <a href="https://x.com/benjawins">follow @benjawins</a></p>
+<div class="sheet">
+
+  <header class="hero">
+    <nav class="sans">
+      <span></span>
+      <a class="wordmark" href="/">Benjawins</a>
+      <a class="follow" href="https://x.com/benjawins">Follow along</a>
+    </nav>
+    <div class="hero-inner">
+      <h1>Every app I ship goes on the board. The wins, the losses, and the score.</h1>
+      <a class="cta" href="#board">See the scoreboard</a>
+    </div>
+    <!-- Poster illustration: drop hero.png (~2400x1300) in the repo root and it appears. -->
+    <img class="hero-art" src="/hero.png" alt="" onerror="this.style.display='none'">
   </header>
 
-  <a class="featured" href="https://klut.app">
-    <span class="tag">* Now playing *</span>
-    <span class="big">KLUT</span>
-    <p class="pitch">The newest ship: a calm, guided cleaning ritual for your MacBook. Pitch black screen, a moving light, your cloth.</p>
-    <span class="play">&gt; Press play<span class="cursor">_</span></span>
-  </a>
+  <section class="board" id="board">
+    <div class="wrap">
+      <h2>The scoreboard</h2>
+      <p class="rules">Each project scores in its own currency: money if it charges, people if it does not. Dead games stay on the board. That is the whole system.</p>
 
-  <h2>* High scores *</h2>
-  <div class="board">
-    <div class="game">
-      <div class="line">
-        <span class="rank">1ST</span><span class="name">Nora</span><span class="leader"></span><span class="score">1K BETAS</span><span class="status wip">BETA</span>
+      <div class="entry">
+        <span class="name">Nora</span>
+        <span class="dots"></span>
+        <span class="score">1,000+ beta users</span>
+        <span class="tag beta">BETA</span>
       </div>
-      <p class="desc">AI personal assistant that lives in iMessage and Telegram. You text it, it runs your calendar, email and tasks.</p>
-    </div>
-    <a class="game" href="https://getrevertly.app">
-      <div class="line">
-        <span class="rank">2ND</span><span class="name">Revertly</span><span class="leader"></span><span class="score">$40</span><span class="status alive">ALIVE</span>
-      </div>
+      <p class="desc">An AI personal assistant living in iMessage and Telegram. You text it, it runs your calendar, email and tasks.</p>
+
+      <a href="https://getrevertly.app" style="display:block">
+        <div class="entry">
+          <span class="name">Revertly</span>
+          <span class="dots"></span>
+          <span class="score">$40</span>
+          <span class="tag alive">LIVE · iOS</span>
+        </div>
+      </a>
       <p class="desc">Native iOS app for daily practice. Survived three App Store rejections, then strangers started paying for it.</p>
-    </a>
-    <a class="game" href="https://klut.app">
-      <div class="line">
-        <span class="rank">3RD</span><span class="name">Klut</span><span class="leader"></span><span class="score">NEW!</span><span class="status alive">ALIVE</span>
-      </div>
-      <p class="desc">A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path with light.</p>
-    </a>
-    <a class="game" href="https://shitsted.no">
-      <div class="line">
-        <span class="rank">4TH</span><span class="name">Shitsted</span><span class="leader"></span><span class="score">0 TRACKERS</span><span class="status alive">ALIVE</span>
-      </div>
+
+      <a href="https://klut.app" style="display:block">
+        <div class="entry">
+          <span class="name">Klut</span>
+          <span class="dots"></span>
+          <span class="score">brand new</span>
+          <span class="tag alive">LIVE · macOS</span>
+        </div>
+      </a>
+      <p class="desc">A calm, guided cleaning ritual for your MacBook. Locks the keyboard and traces the wiping path with light.</p>
+
+      <a href="https://shitsted.no" style="display:block">
+        <div class="entry">
+          <span class="name">Shitsted</span>
+          <span class="dots"></span>
+          <span class="score">0 trackers</span>
+          <span class="tag alive">LIVE · WEB</span>
+        </div>
+      </a>
       <p class="desc">Norwegian news briefs with zero cookie banners and zero tracking.</p>
-    </a>
-    <a class="game" href="https://peps.no">
-      <div class="line">
-        <span class="rank">5TH</span><span class="name">peps.no</span><span class="leader"></span><span class="score">LOADING</span><span class="status wip">WIP</span>
-      </div>
-      <p class="desc">Norwegian knowledge base on peptides and longevity science. Live, still being built out.</p>
-    </a>
-    <div class="game dead">
-      <div class="line">
-        <span class="rank">-</span><span class="name">ValentineBomb</span><span class="leader"></span><span class="score">$3</span><span class="status over">GAME OVER</span>
+
+      <a href="https://peps.no" style="display:block">
+        <div class="entry">
+          <span class="name">peps.no</span>
+          <span class="dots"></span>
+          <span class="score">under construction</span>
+          <span class="tag beta">WIP</span>
+        </div>
+      </a>
+      <p class="desc">Norwegian knowledge base on peptides and longevity science.</p>
+
+      <div class="entry">
+        <span class="name dead-name">ValentineBomb</span>
+        <span class="dots"></span>
+        <span class="score">$3, once</span>
+        <span class="tag dead">GAME OVER</span>
       </div>
       <p class="desc">A three-dollar surprise in a link. The market swiped left.</p>
-    </div>
-    <div class="game dead">
-      <div class="line">
-        <span class="rank">-</span><span class="name">BirthdayBomb</span><span class="leader"></span><span class="score">$0</span><span class="status over">GAME OVER</span>
+
+      <div class="entry">
+        <span class="name dead-name">BirthdayBomb</span>
+        <span class="dots"></span>
+        <span class="score">$0</span>
+        <span class="tag dead">GAME OVER</span>
       </div>
       <p class="desc">Same engine, birthday edition. People say happy birthday for free, it turns out.</p>
-    </div>
-    <div class="game dead">
-      <div class="line">
-        <span class="rank">-</span><span class="name">Red Envelope</span><span class="leader"></span><span class="score">$0</span><span class="status over">GAME OVER</span>
+
+      <div class="entry">
+        <span class="name dead-name">Red Envelope</span>
+        <span class="dots"></span>
+        <span class="score">$0</span>
+        <span class="tag dead">GAME OVER</span>
       </div>
       <p class="desc">Lunar New Year edition. Three bombs, zero explosions.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="coin">
-    <p>Everything on the table is free or nearly free. If something I made earned a smile, the machine takes coins.</p>
+  <section class="coin">
+    <h2>Career earnings: $43. Players reached: 1,000+.</h2>
+    <p>Everything on the board is free or nearly free. If something I made earned a smile, the machine takes coins.</p>
     <!-- TODO: swap for Stripe Payment Link -->
-    <a class="btn" href="https://x.com/benjawins">&gt; Insert coin<span class="cursor">_</span></a>
-  </div>
+    <a class="cta" href="https://x.com/benjawins">Insert a coin</a>
+  </section>
 
-  <footer>
-    Press start: <a href="https://x.com/benjawins">@benjawins</a> · benjawins.com
+  <footer class="sans">
+    benjawins.com · <a href="https://x.com/benjawins">@benjawins</a> · Ben, Norway
   </footer>
-</main>
+</div>
 </body>
 </html>
