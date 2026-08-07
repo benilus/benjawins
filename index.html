@@ -4,166 +4,212 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Benja wins.</title>
-<meta name="description" content="Ben. Builder in Norway. Small, sharp Mac and web apps, shipped in public.">
+<meta name="description" content="Ben. Builder in Norway. The public scoreboard: apps shipped, lessons taken.">
 <meta property="og:title" content="Benja wins.">
-<meta property="og:description" content="Small, sharp apps, shipped in public.">
-<meta name="theme-color" content="#0b0d0c">
+<meta property="og:description" content="The public scoreboard. Wins shipped, losses admitted.">
+<meta name="theme-color" content="#0a0c0b">
 <style>
   :root {
-    --bg: #0b0d0c;
-    --panel: #121614;
-    --text: #edf2ee;
-    --dim: rgb(237 242 238 / 0.55);
-    --win: #6ee7a0;
+    --bg: #0a0c0b;
+    --text: #eef3ef;
+    --dim: rgb(238 243 239 / 0.5);
+    --faint: rgb(238 243 239 / 0.28);
+    --line: rgb(238 243 239 / 0.09);
+    --win: #62e394;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: var(--win); color: #08130c; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    line-height: 1.5;
   }
-  a { color: var(--win); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a { color: inherit; text-decoration: none; }
   .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 
-  main { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+  main { max-width: 900px; margin: 0 auto; padding: 0 28px; }
 
-  header { padding: 120px 0 72px; }
-  h1 {
-    font-size: clamp(2.6rem, 7vw, 4.2rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+  /* Hero: the name is the scoreboard */
+  header { padding: 110px 0 30px; }
+  .record {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 26px;
   }
-  h1 em { font-style: normal; color: var(--win); }
+  .record b { color: var(--win); font-weight: 600; }
+  h1 {
+    font-size: clamp(3.4rem, 12vw, 8.5rem);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+  h1 .w { color: var(--win); }
   .bio {
-    margin-top: 20px;
-    font-size: 1.05rem;
+    margin-top: 30px;
+    font-size: 1.08rem;
     color: var(--dim);
     max-width: 46ch;
   }
-  .links { margin-top: 26px; display: flex; gap: 22px; font-size: 0.95rem; }
+  .bio a { color: var(--win); }
+  .bio a:hover { text-decoration: underline; }
 
-  h2 {
-    font-size: 0.8rem;
+  /* Scoreboard */
+  section { padding: 70px 0 0; }
+  .label {
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 22px;
+    color: var(--faint);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
   }
-
-  .ships { display: grid; gap: 16px; padding-bottom: 72px; }
-  .ship {
+  .row {
     display: grid;
-    grid-template-columns: 92px 1fr;
-    gap: 22px;
-    align-items: center;
-    background: var(--panel);
-    border: 1px solid rgb(237 242 238 / 0.07);
-    border-radius: 14px;
-    padding: 20px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    grid-template-columns: 52px 1fr auto;
+    gap: 26px;
+    align-items: baseline;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--line);
   }
-  a.ship { color: inherit; }
-  a.ship:hover { text-decoration: none; border-color: rgb(110 231 160 / 0.4); transform: translateY(-1px); }
-  .tile {
-    width: 92px; height: 92px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 600; font-size: 1.05rem;
+  a.row:hover .name { color: var(--win); }
+  a.row:hover .mark { transform: translateY(-2px); }
+  .mark {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--win);
+    line-height: 1;
+    transition: transform 0.15s ease;
   }
-  .tile.klut { background: linear-gradient(160deg, #0c1316, #17272c); color: #a3c0b4; }
-  .tile.revertly { background: linear-gradient(160deg, #101828, #1b2a4a); color: #d4b96a; }
-  .tile.vbomb { background: linear-gradient(160deg, #2a1215, #471a22); color: #f2a3b3; }
-  .ship h3 { font-size: 1.15rem; font-weight: 600; }
-  .ship p { color: var(--dim); font-size: 0.95rem; margin-top: 3px; }
-  .status {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.72rem;
+  .mark.pending { color: var(--faint); }
+  .name { font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; transition: color 0.15s ease; }
+  .row p { color: var(--dim); font-size: 0.98rem; margin-top: 4px; max-width: 52ch; }
+  .meta {
+    font-size: 12px;
+    color: var(--faint);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--win);
+    white-space: nowrap;
   }
-  .status.soon { color: var(--dim); }
+  a.row .meta { color: var(--win); }
 
-  .support { padding-bottom: 90px; }
-  .support p { color: var(--dim); max-width: 48ch; margin-bottom: 20px; }
+  /* Losses: small, honest, mono */
+  .losses { padding-top: 64px; }
+  .losses ul { list-style: none; padding-top: 6px; }
+  .losses li {
+    font-size: 0.9rem;
+    color: var(--dim);
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 26px;
+  }
+  .losses .l { color: #e37676; font-weight: 700; }
+
+  /* Support */
+  .support { padding: 80px 0 100px; }
+  .support p { color: var(--dim); max-width: 46ch; margin: 14px 0 24px; }
   .btn {
     display: inline-block;
     background: var(--win);
     color: #08130c;
-    font-weight: 600;
+    font-weight: 650;
     font-size: 0.95rem;
-    padding: 12px 26px;
+    padding: 13px 30px;
     border-radius: 999px;
+    transition: transform 0.15s ease;
   }
-  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: scale(0.98); }
 
   footer {
-    padding: 30px 0 46px;
-    border-top: 1px solid rgb(237 242 238 / 0.07);
-    color: rgb(237 242 238 / 0.35);
-    font-size: 0.85rem;
+    padding: 26px 0 44px;
+    border-top: 1px solid var(--line);
+    color: var(--faint);
+    font-size: 0.82rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
   }
+  footer a:hover { color: var(--win); }
 
-  @media (max-width: 560px) {
-    header { padding: 80px 0 56px; }
-    .ship { grid-template-columns: 64px 1fr; }
-    .tile { width: 64px; height: 64px; font-size: 0.85rem; }
+  @media (max-width: 600px) {
+    header { padding: 72px 0 16px; }
+    .row { grid-template-columns: 36px 1fr; gap: 18px; }
+    .row .meta { grid-column: 2; margin-top: 6px; }
+    .mark { font-size: 1.5rem; }
+    .losses li { grid-template-columns: 36px 1fr; gap: 18px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    header > * , section, footer { animation: rise 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+    h1 { animation-delay: 0.05s; }
+    .bio { animation-delay: 0.12s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
 </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>Benja <em>wins</em>.</h1>
-    <p class="bio">Ben. Builder in Norway. I make small, sharp apps and ship them in public. The name is the goal.</p>
-    <div class="links mono">
-      <a href="https://x.com/benjawins">@benjawins</a>
-      <a href="https://github.com/benilus">github</a>
-    </div>
+    <p class="record mono">career record <b>2 W</b> · 3 L · still playing</p>
+    <h1>Benja<br><span class="w">wins.</span></h1>
+    <p class="bio">Ben. Builder in Norway. Every app I ship goes on the board, and so does every loss. Watch it happen on <a href="https://x.com/benjawins">@benjawins</a>.</p>
   </header>
 
-  <section class="ships">
-    <h2>Shipped</h2>
-    <a class="ship" href="https://klut.app">
-      <div class="tile klut">Klut</div>
-      <div>
-        <h3>Klut</h3>
-        <p>A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the path, follows Apple's own care guidance.</p>
-        <span class="status mono">live · macOS</span>
-      </div>
+  <section>
+    <div class="label">The wins</div>
+    <a class="row" href="https://klut.app">
+      <span class="mark">W</span>
+      <span>
+        <span class="name">Klut</span>
+        <p>A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path on screen, follows Apple's own care guidance.</p>
+      </span>
+      <span class="meta mono">live · macOS</span>
     </a>
-    <div class="ship">
-      <div class="tile revertly">Rvt</div>
-      <div>
-        <h3>Revertly</h3>
-        <p>Native iOS app for building better daily practice, prayer times included.</p>
-        <span class="status soon mono">in App Store review</span>
-      </div>
-    </div>
-    <a class="ship" href="https://valentinebomb.vercel.app">
-      <div class="tile vbomb">VB</div>
-      <div>
-        <h3>ValentineBomb</h3>
+    <a class="row" href="https://valentinebomb.vercel.app">
+      <span class="mark">W</span>
+      <span>
+        <span class="name">ValentineBomb</span>
         <p>A surprise in a link. Photos, a message, and a little chaos for someone you like.</p>
-        <span class="status mono">live · web</span>
-      </div>
+      </span>
+      <span class="meta mono">live · web</span>
     </a>
+    <div class="row">
+      <span class="mark pending">W?</span>
+      <span>
+        <span class="name">Revertly</span>
+        <p>Native iOS app for building better daily practice. Currently surviving App Store review.</p>
+      </span>
+      <span class="meta mono">in review</span>
+    </div>
+  </section>
+
+  <section class="losses">
+    <div class="label">The losses</div>
+    <ul class="mono">
+      <li><span class="l">L</span><span>Rejected by App Store review three times in one week. Build 7 went back in swinging.</span></li>
+      <li><span class="l">L</span><span>Named an app Pristine. The name was taken. Renamed it Klut the same day and shipped anyway.</span></li>
+      <li><span class="l">L</span><span>Hardened my server firewall so well my own deploys stopped working for two weeks. Nobody noticed, including me.</span></li>
+    </ul>
   </section>
 
   <section class="support">
-    <h2>Support</h2>
-    <p>Everything here is free or nearly free. If something I made saved your keyboard or your relationship, you can buy me a cloth.</p>
+    <div class="label">Support</div>
+    <p>Everything on the board is free or nearly free. If something I made saved your keyboard or your relationship, buy me a cloth.</p>
     <!-- TODO: swap for Stripe Payment Link -->
     <a class="btn" href="https://x.com/benjawins">Buy me a cloth</a>
   </section>
 
-  <footer class="mono">benjawins.com · built with Claude Code</footer>
+  <footer class="mono">
+    <span>benjawins.com</span>
+    <a href="https://x.com/benjawins">@benjawins</a>
+  </footer>
 </main>
 </body>
 </html>
