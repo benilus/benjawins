@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benja wins.</title>
+<meta name="description" content="Ben. Builder in Norway. Small, sharp Mac and web apps, shipped in public.">
+<meta property="og:title" content="Benja wins.">
+<meta property="og:description" content="Small, sharp apps, shipped in public.">
+<meta name="theme-color" content="#0b0d0c">
+<style>
+  :root {
+    --bg: #0b0d0c;
+    --panel: #121614;
+    --text: #edf2ee;
+    --dim: rgb(237 242 238 / 0.55);
+    --win: #6ee7a0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  a { color: var(--win); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  main { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+
+  header { padding: 120px 0 72px; }
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  h1 em { font-style: normal; color: var(--win); }
+  .bio {
+    margin-top: 20px;
+    font-size: 1.05rem;
+    color: var(--dim);
+    max-width: 46ch;
+  }
+  .links { margin-top: 26px; display: flex; gap: 22px; font-size: 0.95rem; }
+
+  h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 22px;
+  }
+
+  .ships { display: grid; gap: 16px; padding-bottom: 72px; }
+  .ship {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 22px;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid rgb(237 242 238 / 0.07);
+    border-radius: 14px;
+    padding: 20px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  a.ship { color: inherit; }
+  a.ship:hover { text-decoration: none; border-color: rgb(110 231 160 / 0.4); transform: translateY(-1px); }
+  .tile {
+    width: 92px; height: 92px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 1.05rem;
+  }
+  .tile.klut { background: linear-gradient(160deg, #0c1316, #17272c); color: #a3c0b4; }
+  .tile.revertly { background: linear-gradient(160deg, #101828, #1b2a4a); color: #d4b96a; }
+  .tile.vbomb { background: linear-gradient(160deg, #2a1215, #471a22); color: #f2a3b3; }
+  .ship h3 { font-size: 1.15rem; font-weight: 600; }
+  .ship p { color: var(--dim); font-size: 0.95rem; margin-top: 3px; }
+  .status {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--win);
+  }
+  .status.soon { color: var(--dim); }
+
+  .support { padding-bottom: 90px; }
+  .support p { color: var(--dim); max-width: 48ch; margin-bottom: 20px; }
+  .btn {
+    display: inline-block;
+    background: var(--win);
+    color: #08130c;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 26px;
+    border-radius: 999px;
+  }
+  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+
+  footer {
+    padding: 30px 0 46px;
+    border-top: 1px solid rgb(237 242 238 / 0.07);
+    color: rgb(237 242 238 / 0.35);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 560px) {
+    header { padding: 80px 0 56px; }
+    .ship { grid-template-columns: 64px 1fr; }
+    .tile { width: 64px; height: 64px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Benja <em>wins</em>.</h1>
+    <p class="bio">Ben. Builder in Norway. I make small, sharp apps and ship them in public. The name is the goal.</p>
+    <div class="links mono">
+      <a href="https://x.com/benjawins">@benjawins</a>
+      <a href="https://github.com/benilus">github</a>
+    </div>
+  </header>
+
+  <section class="ships">
+    <h2>Shipped</h2>
+    <a class="ship" href="https://klut.app">
+      <div class="tile klut">Klut</div>
+      <div>
+        <h3>Klut</h3>
+        <p>A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the path, follows Apple's own care guidance.</p>
+        <span class="status mono">live · macOS</span>
+      </div>
+    </a>
+    <div class="ship">
+      <div class="tile revertly">Rvt</div>
+      <div>
+        <h3>Revertly</h3>
+        <p>Native iOS app for building better daily practice, prayer times included.</p>
+        <span class="status soon mono">in App Store review</span>
+      </div>
+    </div>
+    <a class="ship" href="https://valentinebomb.vercel.app">
+      <div class="tile vbomb">VB</div>
+      <div>
+        <h3>ValentineBomb</h3>
+        <p>A surprise in a link. Photos, a message, and a little chaos for someone you like.</p>
+        <span class="status mono">live · web</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="support">
+    <h2>Support</h2>
+    <p>Everything here is free or nearly free. If something I made saved your keyboard or your relationship, you can buy me a cloth.</p>
+    <!-- TODO: swap for Stripe Payment Link -->
+    <a class="btn" href="https://x.com/benjawins">Buy me a cloth</a>
+  </section>
+
+  <footer class="mono">benjawins.com · built with Claude Code</footer>
+</main>
+</body>
+</html>
