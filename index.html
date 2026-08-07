@@ -98,19 +98,9 @@
   }
   a.row .meta { color: var(--win); }
 
-  /* Losses: small, honest, mono */
+  /* Losses: same ledger, red marks */
   .losses { padding-top: 64px; }
-  .losses ul { list-style: none; padding-top: 6px; }
-  .losses li {
-    font-size: 0.9rem;
-    color: var(--dim);
-    padding: 13px 0;
-    border-bottom: 1px solid var(--line);
-    display: grid;
-    grid-template-columns: 52px 1fr;
-    gap: 26px;
-  }
-  .losses .l { color: #e37676; font-weight: 700; }
+  .mark.l { color: #e37676; }
 
   /* Support */
   .support { padding: 80px 0 100px; }
@@ -157,7 +147,7 @@
 <body>
 <main>
   <header>
-    <p class="record mono">career record <b>2 W</b> · 4 L · still playing</p>
+    <p class="record mono">career record <b>2 W</b> · 3 L · still playing</p>
     <h1>Benja<br><span class="w">wins.</span></h1>
     <p class="bio">Ben. Builder in Norway. Every app I ship goes on the board, and so does every loss. Watch it happen on <a href="https://x.com/benjawins">@benjawins</a>.</p>
   </header>
@@ -184,12 +174,30 @@
 
   <section class="losses">
     <div class="label">The losses</div>
-    <ul class="mono">
-      <li><span class="l">L</span><span>Rejected by App Store review three times in one week. Build 7 got in. See Revertly, above.</span></li>
-      <li><span class="l">L</span><span>ValentineBomb: a three-dollar surprise in a link. The market swiped left.</span></li>
-      <li><span class="l">L</span><span>Named an app Pristine. The name was taken. Renamed it Klut the same day and shipped anyway.</span></li>
-      <li><span class="l">L</span><span>Hardened my server firewall so well my own deploys stopped working for two weeks. Nobody noticed, including me.</span></li>
-    </ul>
+    <div class="row">
+      <span class="mark l">L</span>
+      <span>
+        <span class="name">ValentineBomb</span>
+        <p>A three-dollar surprise in a link for Valentine's Day. Photos, a message, a little chaos. The market swiped left.</p>
+      </span>
+      <span class="meta mono">retired · web</span>
+    </div>
+    <div class="row">
+      <span class="mark l">L</span>
+      <span>
+        <span class="name">BirthdayBomb</span>
+        <p>Same engine, birthday edition. Turns out people already know how to say happy birthday for free.</p>
+      </span>
+      <span class="meta mono">retired · web</span>
+    </div>
+    <div class="row">
+      <span class="mark l">L</span>
+      <span>
+        <span class="name">Red Envelope</span>
+        <p>Lunar New Year edition. Year of the Horse, lanterns, fireworks. Three bombs, zero explosions.</p>
+      </span>
+      <span class="meta mono">retired · web</span>
+    </div>
   </section>
 
   <section class="support">
