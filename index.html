@@ -70,38 +70,29 @@
     padding: 40px 0 18px;
   }
 
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th {
-    text-align: left;
-    font-size: 11px;
-    color: var(--green-dim);
-    font-weight: 400;
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--line);
-    letter-spacing: 0.2em;
-  }
-  td { padding: 15px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  tr.link { cursor: pointer; }
-  tr.link:hover td { background: rgb(93 255 155 / 0.06); }
-  tr.link:hover .name { text-shadow: 0 0 12px rgb(93 255 155 / 0.6); }
-  .rank { color: var(--gold); white-space: nowrap; }
+  .board { border-top: 1px solid var(--line); }
+  .game { display: block; padding: 16px 4px; border-bottom: 1px solid var(--line); }
+  a.game:hover { background: rgb(93 255 155 / 0.05); }
+  a.game:hover .name { text-shadow: 0 0 12px rgb(93 255 155 / 0.6); }
+  .line { display: flex; align-items: baseline; gap: 12px; font-size: 14px; }
+  .rank { color: var(--gold); width: 40px; flex: none; }
   .name { color: var(--green); font-weight: 700; }
-  .desc {
-    display: block;
-    color: rgb(232 245 236 / 0.5);
-    font-size: 11.5px;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    margin-top: 4px;
-    max-width: 46ch;
-  }
+  .leader { flex: 1; border-bottom: 2px dotted rgb(93 255 155 / 0.22); transform: translateY(-4px); min-width: 24px; }
   .score { color: var(--white); white-space: nowrap; }
-  .status { white-space: nowrap; }
+  .status { white-space: nowrap; width: 96px; text-align: right; flex: none; }
   .alive { color: var(--green); }
   .wip { color: var(--gold); }
   .over { color: var(--red); }
-  tr.dead .name { color: rgb(232 245 236 / 0.45); text-decoration: line-through; text-decoration-color: rgb(255 107 107 / 0.6); }
-  tr.dead .rank { color: rgb(232 245 236 / 0.3); }
+  .desc {
+    margin: 5px 0 0 52px;
+    color: rgb(232 245 236 / 0.45);
+    font-size: 11.5px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    max-width: 56ch;
+  }
+  .dead .name { color: rgb(232 245 236 / 0.45); text-decoration: line-through; text-decoration-color: rgb(255 107 107 / 0.6); }
+  .dead .rank { color: rgb(232 245 236 / 0.3); }
 
   .coin { text-align: center; padding: 64px 0 30px; }
   .coin p {
@@ -156,85 +147,56 @@
   </header>
 
   <h2>* High scores *</h2>
-  <table>
-    <thead>
-      <tr><th>Rank</th><th>Name</th><th class="hide">Score</th><th>Status</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="rank">1ST</td>
-        <td>
-          <span class="name">Nora</span>
-          <span class="desc">AI personal assistant that lives in iMessage and Telegram. You text it, it runs your calendar, email and tasks.</span>
-        </td>
-        <td class="hide score">1K BETAS</td>
-        <td class="status wip">BETA</td>
-      </tr>
-      <tr class="link" onclick="location.href='https://getrevertly.app'">
-        <td class="rank">2ND</td>
-        <td>
-          <span class="name">Revertly</span>
-          <span class="desc">Native iOS app for daily practice. Survived three App Store rejections, then strangers started paying for it.</span>
-        </td>
-        <td class="hide score">$40</td>
-        <td class="status alive">ALIVE</td>
-      </tr>
-      <tr class="link" onclick="location.href='https://klut.app'">
-        <td class="rank">3RD</td>
-        <td>
-          <span class="name">Klut</span>
-          <span class="desc">A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path with light.</span>
-        </td>
-        <td class="hide score">$0 · NEW!</td>
-        <td class="status alive">ALIVE</td>
-      </tr>
-      <tr class="link" onclick="location.href='https://shitsted.no'">
-        <td class="rank">4TH</td>
-        <td>
-          <span class="name">Shitsted</span>
-          <span class="desc">Norwegian news briefs with zero cookie banners and zero tracking.</span>
-        </td>
-        <td class="hide score">$0</td>
-        <td class="status alive">ALIVE</td>
-      </tr>
-      <tr class="link" onclick="location.href='https://peps.no'">
-        <td class="rank">5TH</td>
-        <td>
-          <span class="name">peps.no</span>
-          <span class="desc">Norwegian knowledge base on peptides and longevity science. Live, still being built out.</span>
-        </td>
-        <td class="hide score">$0</td>
-        <td class="status wip">WIP</td>
-      </tr>
-      <tr class="dead">
-        <td class="rank">-</td>
-        <td>
-          <span class="name">ValentineBomb</span>
-          <span class="desc">A three-dollar surprise in a link. The market swiped left.</span>
-        </td>
-        <td class="hide score">$3</td>
-        <td class="status over">GAME OVER</td>
-      </tr>
-      <tr class="dead">
-        <td class="rank">-</td>
-        <td>
-          <span class="name">BirthdayBomb</span>
-          <span class="desc">Same engine, birthday edition. People say happy birthday for free, it turns out.</span>
-        </td>
-        <td class="hide score">$0</td>
-        <td class="status over">GAME OVER</td>
-      </tr>
-      <tr class="dead">
-        <td class="rank">-</td>
-        <td>
-          <span class="name">Red Envelope</span>
-          <span class="desc">Lunar New Year edition. Three bombs, zero explosions.</span>
-        </td>
-        <td class="hide score">$0</td>
-        <td class="status over">GAME OVER</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="board">
+    <div class="game">
+      <div class="line">
+        <span class="rank">1ST</span><span class="name">Nora</span><span class="leader"></span><span class="score">1K BETAS</span><span class="status wip">BETA</span>
+      </div>
+      <p class="desc">AI personal assistant that lives in iMessage and Telegram. You text it, it runs your calendar, email and tasks.</p>
+    </div>
+    <a class="game" href="https://getrevertly.app">
+      <div class="line">
+        <span class="rank">2ND</span><span class="name">Revertly</span><span class="leader"></span><span class="score">$40</span><span class="status alive">ALIVE</span>
+      </div>
+      <p class="desc">Native iOS app for daily practice. Survived three App Store rejections, then strangers started paying for it.</p>
+    </a>
+    <a class="game" href="https://klut.app">
+      <div class="line">
+        <span class="rank">3RD</span><span class="name">Klut</span><span class="leader"></span><span class="score">NEW!</span><span class="status alive">ALIVE</span>
+      </div>
+      <p class="desc">A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path with light.</p>
+    </a>
+    <a class="game" href="https://shitsted.no">
+      <div class="line">
+        <span class="rank">4TH</span><span class="name">Shitsted</span><span class="leader"></span><span class="score">0 TRACKERS</span><span class="status alive">ALIVE</span>
+      </div>
+      <p class="desc">Norwegian news briefs with zero cookie banners and zero tracking.</p>
+    </a>
+    <a class="game" href="https://peps.no">
+      <div class="line">
+        <span class="rank">5TH</span><span class="name">peps.no</span><span class="leader"></span><span class="score">LOADING</span><span class="status wip">WIP</span>
+      </div>
+      <p class="desc">Norwegian knowledge base on peptides and longevity science. Live, still being built out.</p>
+    </a>
+    <div class="game dead">
+      <div class="line">
+        <span class="rank">-</span><span class="name">ValentineBomb</span><span class="leader"></span><span class="score">$3</span><span class="status over">GAME OVER</span>
+      </div>
+      <p class="desc">A three-dollar surprise in a link. The market swiped left.</p>
+    </div>
+    <div class="game dead">
+      <div class="line">
+        <span class="rank">-</span><span class="name">BirthdayBomb</span><span class="leader"></span><span class="score">$0</span><span class="status over">GAME OVER</span>
+      </div>
+      <p class="desc">Same engine, birthday edition. People say happy birthday for free, it turns out.</p>
+    </div>
+    <div class="game dead">
+      <div class="line">
+        <span class="rank">-</span><span class="name">Red Envelope</span><span class="leader"></span><span class="score">$0</span><span class="status over">GAME OVER</span>
+      </div>
+      <p class="desc">Lunar New Year edition. Three bombs, zero explosions.</p>
+    </div>
+  </div>
 
   <div class="coin">
     <p>Everything on the table is free or nearly free. If something I made saved your keyboard or your relationship, insert a coin.</p>
