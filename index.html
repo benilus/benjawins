@@ -3,229 +3,238 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Benja wins.</title>
-<meta name="description" content="Ben. Builder in Norway. The public scoreboard: apps shipped, lessons taken.">
-<meta property="og:title" content="Benja wins.">
-<meta property="og:description" content="The public scoreboard. Wins shipped, losses admitted.">
-<meta name="theme-color" content="#0a0c0b">
+<title>BENJA WINS — HIGH SCORES</title>
+<meta name="description" content="Ben. Builder in Norway. The high-score table: every app shipped, every game over.">
+<meta property="og:title" content="BENJA WINS — HIGH SCORES">
+<meta property="og:description" content="The high-score table. Apps alive, apps game over. Insert coin to support.">
+<meta name="theme-color" content="#050807">
 <style>
   :root {
-    --bg: #0a0c0b;
-    --text: #eef3ef;
-    --dim: rgb(238 243 239 / 0.5);
-    --faint: rgb(238 243 239 / 0.28);
-    --line: rgb(238 243 239 / 0.09);
-    --win: #62e394;
+    --bg: #050807;
+    --green: #5dff9b;
+    --green-dim: rgb(93 255 155 / 0.55);
+    --white: #e8f5ec;
+    --gold: #ffd45e;
+    --red: #ff6b6b;
+    --line: rgb(93 255 155 / 0.16);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  ::selection { background: var(--win); color: #08130c; }
+  ::selection { background: var(--green); color: #041007; }
+  html { background: var(--bg); }
   body {
     background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
+    color: var(--white);
+    font-family: ui-monospace, "SF Mono", Menlo, "Cascadia Mono", monospace;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  /* CRT scanlines: fixed, cheap, non-interactive */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 2px,
+      rgb(0 0 0 / 0.18) 3px, rgb(0 0 0 / 0.18) 4px
+    );
+    z-index: 60;
   }
   a { color: inherit; text-decoration: none; }
-  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 
-  main { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+  main { max-width: 760px; margin: 0 auto; padding: 0 20px; }
 
-  /* Hero: the name is the scoreboard */
-  header { padding: 110px 0 30px; }
-  .record {
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 26px;
-  }
-  .record b { color: var(--win); font-weight: 600; }
+  header { text-align: center; padding: 84px 0 44px; }
+  .stars { color: var(--gold); font-size: 14px; letter-spacing: 0.5em; }
   h1 {
-    font-size: clamp(3.4rem, 12vw, 8.5rem);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.92;
-    text-transform: uppercase;
+    font-size: clamp(2rem, 8vw, 4.2rem);
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.06em;
+    line-height: 1.05;
+    margin: 14px 0 6px;
+    text-shadow: 0 0 18px rgb(93 255 155 / 0.35);
   }
-  h1 .w { color: var(--win); }
-  .bio {
-    margin-top: 30px;
-    font-size: 1.08rem;
-    color: var(--dim);
+  .subtitle { color: var(--green-dim); font-size: 13px; }
+  .player { margin-top: 26px; font-size: 12px; color: var(--white); }
+  .player a { color: var(--gold); }
+  .player a:hover { text-decoration: underline; }
+
+  h2 {
+    font-size: 13px;
+    color: var(--green-dim);
+    letter-spacing: 0.3em;
+    text-align: center;
+    padding: 40px 0 18px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    text-align: left;
+    font-size: 11px;
+    color: var(--green-dim);
+    font-weight: 400;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.2em;
+  }
+  td { padding: 15px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.link { cursor: pointer; }
+  tr.link:hover td { background: rgb(93 255 155 / 0.06); }
+  tr.link:hover .name { text-shadow: 0 0 12px rgb(93 255 155 / 0.6); }
+  .rank { color: var(--gold); white-space: nowrap; }
+  .name { color: var(--green); font-weight: 700; }
+  .desc {
+    display: block;
+    color: rgb(232 245 236 / 0.5);
+    font-size: 11.5px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-top: 4px;
     max-width: 46ch;
   }
-  .bio a { color: var(--win); }
-  .bio a:hover { text-decoration: underline; }
+  .score { color: var(--white); white-space: nowrap; }
+  .status { white-space: nowrap; }
+  .alive { color: var(--green); }
+  .wip { color: var(--gold); }
+  .over { color: var(--red); }
+  tr.dead .name { color: rgb(232 245 236 / 0.45); text-decoration: line-through; text-decoration-color: rgb(255 107 107 / 0.6); }
+  tr.dead .rank { color: rgb(232 245 236 / 0.3); }
 
-  /* Scoreboard */
-  section { padding: 70px 0 0; }
-  .label {
+  .coin { text-align: center; padding: 64px 0 30px; }
+  .coin p {
+    color: rgb(232 245 236 / 0.55);
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--faint);
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--line);
+    text-transform: none;
+    letter-spacing: 0.03em;
+    max-width: 44ch;
+    margin: 0 auto 26px;
   }
-  .row {
-    display: grid;
-    grid-template-columns: 52px 1fr auto;
-    gap: 26px;
-    align-items: baseline;
-    padding: 30px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  a.row:hover .name { color: var(--win); }
-  a.row:hover .mark { transform: translateY(-2px); }
-  .mark {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--win);
-    line-height: 1;
-    transition: transform 0.15s ease;
-  }
-  .mark.pending { color: var(--faint); }
-  .name { font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; transition: color 0.15s ease; }
-  .row p { color: var(--dim); font-size: 0.98rem; margin-top: 4px; max-width: 52ch; }
-  .meta {
-    font-size: 12px;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  a.row .meta { color: var(--win); }
-
-  /* Losses: same ledger, red marks */
-  .losses { padding-top: 64px; }
-  .mark.l { color: #e37676; }
-
-  /* Support */
-  .support { padding: 80px 0 100px; }
-  .support p { color: var(--dim); max-width: 46ch; margin: 14px 0 24px; }
   .btn {
     display: inline-block;
-    background: var(--win);
-    color: #08130c;
-    font-weight: 650;
-    font-size: 0.95rem;
-    padding: 13px 30px;
-    border-radius: 999px;
-    transition: transform 0.15s ease;
+    border: 2px solid var(--green);
+    color: var(--green);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 14px 30px;
+    text-shadow: 0 0 12px rgb(93 255 155 / 0.4);
+    box-shadow: 0 0 22px rgb(93 255 155 / 0.12), inset 0 0 14px rgb(93 255 155 / 0.06);
   }
-  .btn:hover { transform: translateY(-1px); }
-  .btn:active { transform: scale(0.98); }
+  .btn:hover { background: var(--green); color: #041007; text-shadow: none; }
+  .cursor { animation: blink 1.05s steps(1) infinite; }
 
   footer {
-    padding: 26px 0 44px;
-    border-top: 1px solid var(--line);
-    color: var(--faint);
-    font-size: 0.82rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
+    text-align: center;
+    padding: 40px 0 60px;
+    font-size: 12px;
+    color: var(--green-dim);
   }
-  footer a:hover { color: var(--win); }
+  footer a { color: var(--gold); }
+  footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 600px) {
-    header { padding: 72px 0 16px; }
-    .row { grid-template-columns: 36px 1fr; gap: 18px; }
-    .row .meta { grid-column: 2; margin-top: 6px; }
-    .mark { font-size: 1.5rem; }
-    .losses li { grid-template-columns: 36px 1fr; gap: 18px; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
   }
-  @media (prefers-reduced-motion: no-preference) {
-    header > * , section, footer { animation: rise 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-    h1 { animation-delay: 0.05s; }
-    .bio { animation-delay: 0.12s; }
-    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 560px) {
+    th.hide, td.hide { display: none; }
+    td { padding: 13px 6px; }
   }
 </style>
 </head>
 <body>
 <main>
   <header>
-    <p class="record mono">career record <b>3 W</b> · 3 L · still playing</p>
-    <h1>Benja<br><span class="w">wins.</span></h1>
-    <p class="bio">Ben. Builder in Norway. Every app I ship goes on the board, and so does every loss. Watch it happen on <a href="https://x.com/benjawins">@benjawins</a>.</p>
+    <div class="stars">★ ★ ★</div>
+    <h1>Benja wins</h1>
+    <p class="subtitle">High scores / est. Norway</p>
+    <p class="player">Player: BENJA · <a href="https://x.com/benjawins">follow @benjawins</a></p>
   </header>
 
-  <section>
-    <div class="label">The wins</div>
-    <a class="row" href="https://getrevertly.app">
-      <span class="mark">W</span>
-      <span>
-        <span class="name">Revertly</span>
-        <p>Native iOS app for building better daily practice. Survived three App Store rejections, then became the first thing strangers paid me for.</p>
-      </span>
-      <span class="meta mono">live · iOS</span>
-    </a>
-    <a class="row" href="https://klut.app">
-      <span class="mark">W</span>
-      <span>
-        <span class="name">Klut</span>
-        <p>A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path on screen, follows Apple's own care guidance.</p>
-      </span>
-      <span class="meta mono">live · macOS</span>
-    </a>
-    <a class="row" href="https://shitsted.no">
-      <span class="mark">W</span>
-      <span>
-        <span class="name">Shitsted</span>
-        <p>Norwegian news briefs with zero cookie banners and zero tracking. The news, without the news following you.</p>
-      </span>
-      <span class="meta mono">live · web</span>
-    </a>
-    <a class="row" href="https://peps.no">
-      <span class="mark pending">W?</span>
-      <span>
-        <span class="name">peps.no</span>
-        <p>Norwegian knowledge base on peptides and longevity science. Live, still being built out.</p>
-      </span>
-      <span class="meta mono">under construction</span>
-    </a>
-  </section>
+  <h2>— High scores —</h2>
+  <table>
+    <thead>
+      <tr><th>Rank</th><th>Name</th><th class="hide">Score</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr class="link" onclick="location.href='https://getrevertly.app'">
+        <td class="rank">1ST</td>
+        <td>
+          <span class="name">Revertly</span>
+          <span class="desc">Native iOS app for daily practice. Survived three App Store rejections, then strangers started paying for it.</span>
+        </td>
+        <td class="hide score">FIRST $$$</td>
+        <td class="status alive">ALIVE</td>
+      </tr>
+      <tr class="link" onclick="location.href='https://klut.app'">
+        <td class="rank">2ND</td>
+        <td>
+          <span class="name">Klut</span>
+          <span class="desc">A calm, guided cleaning ritual for your MacBook. Locks the keyboard, traces the wiping path with light.</span>
+        </td>
+        <td class="hide score">NEW!</td>
+        <td class="status alive">ALIVE</td>
+      </tr>
+      <tr class="link" onclick="location.href='https://shitsted.no'">
+        <td class="rank">3RD</td>
+        <td>
+          <span class="name">Shitsted</span>
+          <span class="desc">Norwegian news briefs with zero cookie banners and zero tracking.</span>
+        </td>
+        <td class="hide score">0 TRACKERS</td>
+        <td class="status alive">ALIVE</td>
+      </tr>
+      <tr class="link" onclick="location.href='https://peps.no'">
+        <td class="rank">4TH</td>
+        <td>
+          <span class="name">peps.no</span>
+          <span class="desc">Norwegian knowledge base on peptides and longevity science. Live, still being built out.</span>
+        </td>
+        <td class="hide score">LOADING…</td>
+        <td class="status wip">WIP</td>
+      </tr>
+      <tr class="dead">
+        <td class="rank">-</td>
+        <td>
+          <span class="name">ValentineBomb</span>
+          <span class="desc">A three-dollar surprise in a link. The market swiped left.</span>
+        </td>
+        <td class="hide score">$3</td>
+        <td class="status over">GAME OVER</td>
+      </tr>
+      <tr class="dead">
+        <td class="rank">-</td>
+        <td>
+          <span class="name">BirthdayBomb</span>
+          <span class="desc">Same engine, birthday edition. People say happy birthday for free, it turns out.</span>
+        </td>
+        <td class="hide score">$0</td>
+        <td class="status over">GAME OVER</td>
+      </tr>
+      <tr class="dead">
+        <td class="rank">-</td>
+        <td>
+          <span class="name">Red Envelope</span>
+          <span class="desc">Lunar New Year edition. Three bombs, zero explosions.</span>
+        </td>
+        <td class="hide score">$0</td>
+        <td class="status over">GAME OVER</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <section class="losses">
-    <div class="label">The losses</div>
-    <div class="row">
-      <span class="mark l">L</span>
-      <span>
-        <span class="name">ValentineBomb</span>
-        <p>A three-dollar surprise in a link for Valentine's Day. Photos, a message, a little chaos. The market swiped left.</p>
-      </span>
-      <span class="meta mono">retired · web</span>
-    </div>
-    <div class="row">
-      <span class="mark l">L</span>
-      <span>
-        <span class="name">BirthdayBomb</span>
-        <p>Same engine, birthday edition. Turns out people already know how to say happy birthday for free.</p>
-      </span>
-      <span class="meta mono">retired · web</span>
-    </div>
-    <div class="row">
-      <span class="mark l">L</span>
-      <span>
-        <span class="name">Red Envelope</span>
-        <p>Lunar New Year edition. Year of the Horse, lanterns, fireworks. Three bombs, zero explosions.</p>
-      </span>
-      <span class="meta mono">retired · web</span>
-    </div>
-  </section>
-
-  <section class="support">
-    <div class="label">Support</div>
-    <p>Everything on the board is free or nearly free. If something I made saved your keyboard or your relationship, buy me a cloth.</p>
+  <div class="coin">
+    <p>Everything on the table is free or nearly free. If something I made saved your keyboard or your relationship, insert a coin.</p>
     <!-- TODO: swap for Stripe Payment Link -->
-    <a class="btn" href="https://x.com/benjawins">Buy me a cloth</a>
-  </section>
+    <a class="btn" href="https://x.com/benjawins">&gt; Insert coin<span class="cursor">_</span></a>
+  </div>
 
-  <footer class="mono">
-    <span>benjawins.com</span>
-    <a href="https://x.com/benjawins">@benjawins</a>
+  <footer>
+    Press start: <a href="https://x.com/benjawins">@benjawins</a> · benjawins.com
   </footer>
 </main>
 </body>
