@@ -62,6 +62,39 @@
   .player a { color: var(--gold); }
   .player a:hover { text-decoration: underline; }
 
+  .featured {
+    display: block;
+    margin-top: 46px;
+    border: 2px solid var(--green);
+    box-shadow: 0 0 26px rgb(93 255 155 / 0.14), inset 0 0 18px rgb(93 255 155 / 0.05);
+    padding: 22px 24px 24px;
+    text-align: center;
+  }
+  .featured:hover { background: rgb(93 255 155 / 0.05); }
+  .featured .tag {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+  }
+  .featured .big {
+    display: block;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--green);
+    text-shadow: 0 0 16px rgb(93 255 155 / 0.4);
+    margin: 8px 0 6px;
+  }
+  .featured .pitch {
+    color: rgb(232 245 236 / 0.55);
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    max-width: 48ch;
+    margin: 0 auto 14px;
+  }
+  .featured .play { color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: 0.2em; }
+  .featured:hover .play { text-decoration: underline; }
+
   h2 {
     font-size: 13px;
     color: var(--green-dim);
@@ -145,6 +178,13 @@
     <p class="subtitle">High scores / est. Norway / career earnings: $43 / players reached: 1,000+</p>
     <p class="player">Player: BENJA · <a href="https://x.com/benjawins">follow @benjawins</a></p>
   </header>
+
+  <a class="featured" href="https://klut.app">
+    <span class="tag">* Now playing *</span>
+    <span class="big">KLUT</span>
+    <p class="pitch">The newest ship: a calm, guided cleaning ritual for your MacBook. Pitch black screen, a moving light, your cloth.</p>
+    <span class="play">&gt; Press play<span class="cursor">_</span></span>
+  </a>
 
   <h2>* High scores *</h2>
   <div class="board">
