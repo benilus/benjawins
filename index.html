@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://benjawins.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://benjawins.com/og.png">
-<meta name="theme-color" content="#2b3ed1">
+<meta name="theme-color" content="#1e2ab0">
 <style>
   :root {
     --cobalt: #2b3ed1;
@@ -52,9 +52,9 @@
   .hero {
     position: relative;
     background:
-      radial-gradient(120% 90% at 50% 110%, rgb(0 0 0 / 0.35), transparent 55%),
+      url("/hero.png") center bottom / cover no-repeat,
       linear-gradient(180deg, var(--cobalt) 0%, var(--cobalt-deep) 100%);
-    min-height: 92dvh;
+    min-height: 96dvh;
     display: flex;
     flex-direction: column;
   }
@@ -115,18 +115,6 @@
   }
   .hero .cta:hover { transform: translateY(-1px); }
 
-  /* Poster illustration slot: bottom-anchored subject.
-     Hidden automatically until hero.png exists in the repo. */
-  .hero-art {
-    position: relative;
-    z-index: 1;
-    margin-top: auto;
-    width: 100%;
-    max-height: 50dvh;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-  }
 
   /* Scoreboard: the paper side of the poster */
   .board { background: var(--cream); color: var(--paper-ink); padding: 90px 30px 70px; }
@@ -234,8 +222,6 @@
       <h1>Every app I ship goes on the board. The wins, the losses, and the score.</h1>
       <a class="cta" href="#board">See the scoreboard</a>
     </div>
-    <!-- Poster illustration: drop hero.png (~2400x1300) in the repo root and it appears. -->
-    <img class="hero-art" src="/hero.png" alt="" onerror="this.style.display='none'">
   </header>
 
   <section class="board" id="board">
